@@ -19,29 +19,22 @@ class Solution:
 
     def addTwoNumbers(self, l1: Optional[ListNode],
                       l2: Optional[ListNode]) -> Optional[ListNode]:
-        n1 = self.listNodeToList(l1)
-        n2 = self.listNodeToList(l2)
-        ans = n1 + n2
-        ans = [int(i) for i in str(ans)][::-1]
-        self.ansLen = len(ans)
-        ans = self.createListNode(ans, 0)
-        return ans
+        dummy = ListNode(0)
+        current = dummy
+        carry = 0
 
-    def listNodeToList(self, ln: Optional[ListNode]):
-        ls = []
-        while ln:
-            ls.append(str(ln.val))
-            ln = ln.next
-        ls = reversed(ls)
-        return int("".join(ls))
+        while l1 or l2 or carry:
+            val1 = l1.val if l1 else 0
+            val2 = l2.val if l2 else 0
 
-    def createListNode(self, ls: list, i: int, nxt=None):
-        if i >= self.ansLen:
-            return
-        val = ls[0]
-        return ListNode(
-            val,
-            self.createListNode(ls=ls[1:],
-                                i=i + 1,
-                                nxt=ListNode(val=val, next=nxt)),
-        )
+            total = val1 + val2 + carry
+            carry = total // 10
+            digit = total % 10
+
+            current.next = ListNode(digit)
+            current = current.next
+
+            l1 = l1.next if l1 else None
+            l2 = l2.next if l2 else None
+
+        return dummy.next
