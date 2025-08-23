@@ -16,7 +16,7 @@ Each solution is organized by problem number and includes:
 Solutions are primarily implemented in:
 
 - Python
-- JavaScript
+- SQL
 
 ## How to Use
 
